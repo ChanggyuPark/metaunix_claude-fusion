@@ -1,36 +1,35 @@
-# METAUNIX | Claude × Fusion AI 3D 모델링 실습 가이드
+# METAUNIX Claude × Fusion AI 3D 모델링 실습 가이드
 
-Sixshop 외부 JS 로딩용 소스입니다. v5 최종 HTML 디자인/카피/미리보기 이미지를 보존합니다.
+최종 원본: `Fusion_AI_모델링_실습가이드_v5_문구수정.html` (사용자가 제공한 최종 HTML).
+그 원본을 보존하고 **상단·하단 CTA의 Monday.com 연결 및 UTM 5종 전달**만 추가한 v6입니다.
 
-- 실제 페이지: https://metaunix.co.kr/claude-fusion
+- 사용자 확인 Sixshop URL: https://metaunix.co.kr/claude-fusion
 - Sixshop Page ID: `page2767890`
-- 원본 빈 섹션: `section17448718`
-- Monday.com 신청 폼: https://forms.monday.com/forms/af736c95d271f474447befa443f51450?r=apse2
-- 코드: `landing.js` (구조/인터랙션/CTA 및 UTM), `styles.css` (Shadow DOM 격리 스타일)
+- placeholder section: `section17448718`
+- Monday WorkForm: https://forms.monday.com/forms/af736c95d271f474447befa443f51450?r=apse2
 
-## Sixshop 공통 디자인 편집 애드온 <head> 등록 코드
+## 파일
+- `Fusion_AI_모델링_실습가이드_v6_폼연결.html`: 원본 비교·단독 미리보기용 HTML
+- `landing.js`: Sixshop 경로·Page ID 이중 잠금, HTML 삽입, 미리보기 확대, CTA/UTM 5종 연결, SPA 전환 시 복구
+- `styles.css`: CSS 선택자를 `#metaunix-claude-fusion-app` 아래로 격리
+
+## Sixshop 공통 <head> 삽입
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/gh/ChanggyuPark/metaunix_claude-fusion@main/landing.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ChanggyuPark/metaunix_claude-fusion@main/styles.css?v=2">
+<script defer src="https://cdn.jsdelivr.net/gh/ChanggyuPark/metaunix_claude-fusion@main/landing.js?v=2"></script>
 ```
 
-CSS는 JS가 Shadow DOM 내부로 동적 로드합니다. 기존 Sixshop Header/Footer는 유지됩니다.
-JS는 경로가 정확히 `/claude-fusion`이고 `#page2767890`이 존재할 때만 작동합니다.
-Sixshop SPA 페이지 전환에서도 활성화/복구를 점검합니다.
+JS/CSS 두 파일을 각각 명시적으로 로드합니다. 기존 사이트 Header/Footer는 제거하거나 변경하지 않습니다.
+`/claude-fusion`와 `#page2767890`가 모두 맞는 경우에만 랜딩을 렌더링합니다.
 
-상단/하단 신청 CTA는 새 탭에서 동일한 WorkForm을 엽니다. 
-랜딩 유입 URL의 `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`를 폼으로 전달합니다. 
-세션 중 다른 페이지로 이동해도 가능한 경우 마지막 UTM을 기억합니다.
+## 최종 테스트
 
-## 테스트 체크리스트
+1. HEAD 코드 적용 후 PC/모바일 레이아웃 및 사이트 Header/Footer 확인
+2. 미리보기 4종 클릭 확대 및 닫기
+3. 상단·하단 CTA가 새 탭에서 Monday 폼으로 열리는지
+4. `?utm_source=meta&utm_medium=paid_social&utm_campaign=claude_fusion&utm_term=ai_modeling&utm_content=creative_01`로 접속 후 폼에 5개 전달되는지
+5. 테스트 폼 제출, 보드 컬럼 및 자동 발송 확인
+6. 브라우저 뒤로 가기/다른 페이지 이동 시 다른 페이지에 렌더되지 않는지 확인
 
-1. Sixshop 일반 페이지 콘텐츠 최소 문구 발행, HEAD 코드 적용
-2. 데스크톱/모바일 페이지 로드 및 본문/미리보기/라이트박스 확인
-3. 상단·하단 CTA 모두 새 탭에서 Monday WorkForm으로 이동 확인
-4. 예: `https://metaunix.co.kr/claude-fusion?utm_source=meta&utm_medium=paid_social&utm_campaign=claude_fusion&utm_content=creative_01&utm_term=ai_modeling`
-5. Monday WorkForm URL에 UTM 5종 존재 확인; 실제 제출 후 리드 컬럼 반영 검증
-6. 기존 폼 자동발송 설정이 새 자료에도 대응하는지 점검
-
-## 주의
-GitHub 파일을 커밋했다고 Sixshop 사이트에 자동 표시되는 것은 아닙니다. 
-Sixshop 공통 HEAD에 위 script를 등록해야 합니다. GitHub Pages 활성화 없이도 jsDelivr를 통해 로딩할 수 있습니다.
+주의: GitHub 커밋은 완료되어도 Sixshop의 HEAD 코드를 추가하기 전까지 사이트에는 표시되지 않습니다.
